@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AWS Knowledge Query - MCP Server</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fab fa-aws"></i>
+                <h1>AWS Knowledge Query</h1>
+            </div>
+            <p class="subtitle">Powered by AWS MCP Server</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Search Section -->
+            <section class="search-section">
+                <div class="search-box">
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="Ask anything about AWS services..."
+                        autocomplete="off"
+                    >
+                    <button id="searchBtn" class="search-btn">
+                        <i class="fas fa-search"></i>
+                        Search
+                    </button>
+                </div>
+
+                <!-- Topic Selector -->
+                <div class="topic-selector">
+                    <label for="topicSelect">
+                        <i class="fas fa-filter"></i> Topic:
+                    </label>
+                    <select id="topicSelect">
+                        <option value="general">General (Best Practices)</option>
+                        <option value="reference_documentation">API/SDK Documentation</option>
+                        <option value="troubleshooting">Troubleshooting</option>
+                        <option value="cdk_docs">CDK Concepts</option>
+                        <option value="cdk_constructs">CDK Code Examples</option>
+                        <option value="cloudformation">CloudFormation</option>
+                        <option value="current_awareness">New Features</option>
+                        <option value="amplify_docs">Amplify Framework</option>
+                    </select>
+                    
+                    <label for="limitSelect">
+                        <i class="fas fa-list-ol"></i> Results:
+                    </label>
+                    <select id="limitSelect">
+                        <option value="3">3</option>
+                        <option value="5" selected>5</option>
+                        <option value="10">10</option>
+                    </select>
+                </div>
+
+                <!-- Quick Examples -->
+                <div class="quick-examples">
+                    <span class="example-label">Quick examples:</span>
+                    <button class="example-btn" data-query="How to create a Lambda function">Lambda basics</button>
+                    <button class="example-btn" data-query="S3 best practices">S3 best practices</button>
+                    <button class="example-btn" data-query="boto3 S3 upload" data-topic="reference_documentation">boto3 S3</button>
+                    <button class="example-btn" data-query="Lambda timeout error" data-topic="troubleshooting">Lambda errors</button>
+                </div>
+            </section>
+
+            <!-- Loading Indicator -->
+            <div id="loading" class="loading hidden">
+                <div class="spinner"></div>
+                <p>Searching AWS Knowledge Base...</p>
+            </div>
+
+            <!-- Results Section -->
+            <section id="results" class="results-section hidden">
+                <div class="results-header">
+                    <h2><i class="fas fa-book"></i> Results</h2>
+                    <span id="resultCount" class="result-count"></span>
+                </div>
+                <div id="resultsList" class="results-list"></div>
+            </section>
+
+            <!-- Regions Section -->
+            <section class="regions-section">
+                <button id="showRegionsBtn" class="secondary-btn">
+                    <i class="fas fa-globe"></i>
+                    Show AWS Regions
+                </button>
+                <div id="regionsList" class="regions-list hidden"></div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>
+                <i class="fas fa-info-circle"></i>
+                Using AWS Knowledge MCP Server - Free, No Auth Required
+            </p>
+            <p class="endpoint">
+                <i class="fas fa-link"></i>
+                <code>https://knowledge-mcp.global.api.aws</code>
+            </p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
