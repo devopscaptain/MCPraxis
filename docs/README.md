@@ -1,495 +1,397 @@
-# AWS Knowledge MCP Server - Query Tools
+# AWS Knowledge Query Tool - Documentation
 
-> Query AWS documentation and services using AWS's public MCP server endpoint. No deployment, no AWS account, completely free!
+Complete documentation for the AWS Knowledge Query Tool.
 
-## 📖 Table of Contents
+## 📚 Documentation Index
 
-- [Overview](#overview)
-- [Features](#features)
-- [Installation](#installation)
-- [Quick Start](#quick-start)
-- [Usage](#usage)
-  - [Command Line Tool](#command-line-tool)
-  - [Interactive Mode](#interactive-mode)
-  - [Use in Your Code](#use-in-your-code)
-- [Available Topics](#available-topics)
-- [Examples](#examples)
-- [Troubleshooting](#troubleshooting)
-- [FAQ](#faq)
+### Getting Started
+- [Main README](../README.md) - Quick start and overview
+- [Installation Guide](#installation) - Detailed setup instructions
 
----
+### User Guides
+- [CLI Guide](CLI_GUIDE.md) - Command-line interface reference
+- [Interactive Mode Guide](INTERACTIVE_GUIDE.md) - Chat-style interface guide
+- [Web UI Guide](WEB_UI_GUIDE.md) - Web interface documentation
 
-## 🎯 Overview
+### Developer Resources
+- [API Reference](API_REFERENCE.md) - Python API documentation
+- [Troubleshooting](TROUBLESHOOTING.md) - Common issues and solutions
 
-This project provides three ways to query AWS's official documentation and services through the **AWS Knowledge MCP Server** - a free, public endpoint managed by AWS.
+## 🎯 What is This Tool?
 
-**What is MCP?**  
-Model Context Protocol (MCP) is an open standard that enables AI systems to communicate with external data sources. AWS provides a public MCP server with access to:
-- AWS documentation across all services
-- Regional availability information
-- Service features and APIs
-- Best practices and tutorials
+The AWS Knowledge Query Tool provides three interfaces to query AWS's official documentation through the **AWS Knowledge MCP Server**:
 
-**Endpoint:** `https://knowledge-mcp.global.api.aws`
+1. **Web UI** - Beautiful web interface with real-time search
+2. **CLI** - Fast command-line queries for automation
+3. **Interactive** - Chat-style interface for exploration
 
----
-
-## ✨ Features
-
-### 🔍 Search AWS Documentation
-- Search across 8 specialized topic categories
-- Get official AWS documentation instantly
-- Filter by service, API, troubleshooting, CDK, CloudFormation, etc.
-
-### 🌍 Regional Information
-- List all AWS regions
-- Check service availability by region
-- Verify CloudFormation resource support
-
-### 💻 Three Interfaces
-- **Web UI** - Beautiful web interface with modern design ⭐ NEW!
-- **CLI Tool** - Quick command-line queries with arguments
-- **Interactive Mode** - Chat-style interface for exploration
-
-### 🚀 No Setup Required
-- ✅ No AWS account needed
-- ✅ No authentication required
-- ✅ No deployment necessary
+**Key Features:**
+- ✅ No AWS account required
+- ✅ No authentication needed
 - ✅ Completely free to use
-
----
-
-## 📦 Installation
-
-### Prerequisites
-- Python 3.10 or higher
-- Internet connection
-
-### Setup Steps
-
-```bash
-# 1. Clone or download this project
-cd mcp-project
-
-# 2. Create virtual environment
-python3 -m venv venv
-
-# 3. Activate virtual environment
-source venv/bin/activate  # On macOS/Linux
-# OR
-venv\Scripts\activate     # On Windows
-
-# 4. Install dependencies
-pip install mcp httpx
-
-# 5. Verify installation
-python ask_aws.py --help
-```
-
-**That's it!** You're ready to query AWS documentation.
-
----
+- ✅ Access to all AWS documentation
+- ✅ 8 specialized topic categories
+- ✅ Regional availability information
 
 ## 🚀 Quick Start
 
-### Option 1: Web UI (Recommended for Beginners)
+### 1. Installation
 
 ```bash
-# Start the web interface
-./start_web_ui.sh
+# Create virtual environment
+python3 -m venv venv
 
-# Open your browser to: http://localhost:8080
+# Activate it
+source venv/bin/activate  # macOS/Linux
+# OR
+venv\Scripts\activate     # Windows
+
+# Install dependencies
+pip install mcp httpx flask
 ```
 
-**Features:** Beautiful UI, real-time search, mobile-friendly, quick examples
+### 2. Choose Your Interface
 
-📖 See [WEB_UI_GUIDE.md](WEB_UI_GUIDE.md) for complete web UI documentation.
-
-### Option 2: Command Line
-
+**Web UI (Recommended for beginners):**
 ```bash
-# Ask a question
-python ask_aws.py "How to create a Lambda function"
+cd web
+../venv/bin/python web_ui.py
+# Open http://localhost:8080
 ```
 
-### Option 3: Interactive Mode
-
+**CLI (Best for automation):**
 ```bash
-# Start interactive chat
-python interactive_aws.py
+venv/bin/python cli/ask_aws.py "How to create Lambda function"
 ```
 
----
-
-## 📘 Usage
-
-### Web UI
-
-**Start the server:**
+**Interactive (Best for learning):**
 ```bash
-./start_web_ui.sh
+venv/bin/python cli/interactive_aws.py
 ```
 
-Then open `http://localhost:8080` in your browser.
+## 📖 Documentation Guides
 
-**Features:**
-- Search with topic filtering
-- Quick example buttons
-- View AWS regions
-- Mobile-responsive design
-- Real-time results
+### [CLI Guide](CLI_GUIDE.md)
 
-### Try Your First Query
+Complete reference for the command-line interface.
 
+**Topics covered:**
+- Basic usage and syntax
+- All 8 topic categories explained
+- Examples for each topic
+- Tips for better results
+- Shell scripting integration
+- Advanced usage patterns
+
+**Quick example:**
 ```bash
-# Activate virtual environment (if not already active)
-source venv/bin/activate
-
-# Ask a question
-python ask_aws.py "How to create a Lambda function"
+venv/bin/python cli/ask_aws.py "Lambda best practices" general 5
 ```
 
-You should see results from AWS documentation instantly!
+### [Interactive Mode Guide](INTERACTIVE_GUIDE.md)
 
----
+Guide for the chat-style interactive interface.
 
-## 📘 Usage
+**Topics covered:**
+- All available commands
+- Example sessions
+- Workflow tips
+- Topic switching
+- Viewing regions
+- Learning paths
 
-### Command Line Tool
-
-**Syntax:**
+**Quick example:**
 ```bash
-python ask_aws.py "<question>" [topic] [limit]
-```
-
-**Arguments:**
-- `question` (required) - Your question in quotes
-- `topic` (optional) - Topic category (default: `general`)
-- `limit` (optional) - Number of results (default: 5, max: 10)
-
-**Examples:**
-
-```bash
-# Basic question (uses default 'general' topic)
-python ask_aws.py "How to create a Lambda function"
-
-# Specify topic for better results
-python ask_aws.py "boto3 S3 upload file" reference_documentation
-
-# Limit number of results
-python ask_aws.py "Lambda timeout error" troubleshooting 3
-
-# CDK code examples
-python ask_aws.py "Lambda function CDK Python" cdk_constructs
-
-# Check new features
-python ask_aws.py "Lambda new features 2024" current_awareness
-```
-
-**Get Help:**
-```bash
-python ask_aws.py --help
-```
-
----
-
-### Interactive Mode
-
-Start an interactive chat session:
-
-```bash
-python interactive_aws.py
-```
-
-**Available Commands:**
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `<question>` | Ask directly (no command needed) | `How to use Lambda?` |
-| `ask <question>` | Ask explicitly | `ask Lambda pricing` |
-| `topic <name>` | Change current topic | `topic cdk_docs` |
-| `topics` | List all available topics | `topics` |
-| `regions` | List all AWS regions | `regions` |
-| `available <service>` | Check service availability | `available AWS Lambda` |
-| `help` | Show help message | `help` |
-| `quit` or `exit` | Exit the assistant | `quit` |
-
-**Example Session:**
-
-```
-💬 You: How to create a Lambda function
-[Results displayed...]
-
+venv/bin/python cli/interactive_aws.py
+💬 You: Lambda best practices
 💬 You: topic cdk_constructs
-✅ Topic changed to: cdk_constructs
-
-💬 You: Lambda function CDK Python
-[CDK examples displayed...]
-
-💬 You: regions
-[AWS regions listed...]
-
-💬 You: quit
-👋 Goodbye!
+💬 You: Lambda CDK Python
 ```
 
----
+### [Web UI Guide](WEB_UI_GUIDE.md)
 
-### Use in Your Code
+Complete guide for the web interface.
 
-Import and use the tools in your Python scripts:
+**Topics covered:**
+- Starting the web server
+- Using the search interface
+- Topic filtering
+- Quick examples
+- API endpoints
+- Customization
+- Production deployment
 
-#### Option 1: Simple Query Function
-
-```python
-import asyncio
-from ask_aws import ask_aws
-
-# Ask a question
-asyncio.run(ask_aws("How to create Lambda", "general", 5))
-```
-
-#### Option 2: Assistant Class (More Control)
-
-```python
-import asyncio
-from interactive_aws import AWSAssistant
-
-async def main():
-    # Create assistant
-    assistant = AWSAssistant()
-    
-    # Connect to AWS MCP server
-    await assistant.connect()
-    
-    # Search documentation
-    results = await assistant.ask("Lambda best practices", "general", 5)
-    
-    # Process results
-    for result in results:
-        print(f"Title: {result['title']}")
-        print(f"URL: {result['url']}")
-        print(f"Context: {result.get('context', 'N/A')[:200]}...")
-        print()
-    
-    # List regions
-    regions = await assistant.list_regions()
-    print(f"Total AWS Regions: {len(regions)}")
-    
-    # Check availability
-    availability = await assistant.check_availability("AWS Lambda")
-    print(f"Lambda availability data: {len(availability)} items")
-    
-    # Disconnect
-    await assistant.disconnect()
-
-# Run
-asyncio.run(main())
-```
-
----
-
-## 📚 Available Topics
-
-Choose the right topic for better, more relevant results:
-
-| Topic | Use For | Example Queries |
-|-------|---------|-----------------|
-| **general** | Best practices, architecture, tutorials | "Lambda best practices"<br>"S3 security patterns" |
-| **reference_documentation** | API/SDK/CLI documentation | "boto3 S3 upload_file"<br>"Lambda InvokeFunction API" |
-| **troubleshooting** | Error messages, debugging | "Lambda timeout error"<br>"AccessDenied S3" |
-| **cdk_docs** | CDK concepts, API reference | "CDK stack construct"<br>"cdk deploy command" |
-| **cdk_constructs** | CDK code examples, patterns | "Lambda function CDK Python"<br>"API Gateway CDK" |
-| **cloudformation** | CloudFormation templates | "DynamoDB CloudFormation"<br>"SAM template" |
-| **current_awareness** | New features, announcements | "Lambda new features 2024"<br>"what's new in S3" |
-| **amplify_docs** | Amplify framework (web/mobile) | "Amplify Auth React"<br>"Amplify Storage Flutter" |
-
-**💡 Tip:** When in doubt, use `general` - it works for most questions!
-
----
-
-## 📖 Examples
-
-### General AWS Questions
-
+**Quick example:**
 ```bash
-# Architecture and best practices
-python ask_aws.py "Lambda best practices"
-python ask_aws.py "S3 security best practices"
-python ask_aws.py "DynamoDB vs RDS comparison"
-python ask_aws.py "Serverless architecture patterns"
+cd web
+../venv/bin/python web_ui.py
+# Open http://localhost:8080
 ```
 
-### API/SDK Documentation
+### [API Reference](API_REFERENCE.md)
 
+Python API documentation for developers.
+
+**Topics covered:**
+- AWSAssistant class reference
+- All methods and parameters
+- Complete code examples
+- Error handling
+- Flask integration
+- Custom applications
+
+**Quick example:**
+```python
+from cli.interactive_aws import AWSAssistant
+
+assistant = AWSAssistant()
+await assistant.connect()
+results = await assistant.ask("Lambda best practices")
+await assistant.disconnect()
+```
+
+### [Troubleshooting](TROUBLESHOOTING.md)
+
+Solutions to common issues.
+
+**Topics covered:**
+- Installation issues
+- Connection problems
+- Query issues
+- Web UI problems
+- Interactive mode issues
+- Script/automation issues
+- Advanced debugging
+
+**Quick diagnosis:**
 ```bash
-# Python boto3
-python ask_aws.py "boto3 S3 upload_file parameters" reference_documentation
-python ask_aws.py "boto3 Lambda invoke" reference_documentation
+# Check setup
+python3 --version
+ls -la venv/
+venv/bin/pip list | grep -E "mcp|httpx|flask"
+curl https://knowledge-mcp.global.api.aws
+```
 
-# AWS CLI
-python ask_aws.py "aws s3 cp command syntax" reference_documentation
-python ask_aws.py "aws lambda invoke CLI" reference_documentation
+## 📚 Topic Categories
+
+The tool provides 8 specialized topic categories for better search results:
+
+| Topic | Description | Best For |
+|-------|-------------|----------|
+| **general** | Best practices, architecture, tutorials | Learning, architecture design |
+| **reference_documentation** | API/SDK/CLI documentation | Code implementation, API usage |
+| **troubleshooting** | Error messages, debugging | Fixing errors, debugging |
+| **cdk_docs** | CDK concepts, API reference | Learning CDK, understanding concepts |
+| **cdk_constructs** | CDK code examples, patterns | Writing CDK code, IaC |
+| **cloudformation** | CloudFormation templates | Writing CloudFormation, SAM |
+| **current_awareness** | New features, announcements | Staying updated, new features |
+| **amplify_docs** | Amplify framework | Web/mobile app development |
+
+## 💡 Common Use Cases
+
+### Learning AWS Services
+
+**Goal:** Understand a new AWS service
+
+**Approach:**
+1. Start with Web UI or Interactive mode
+2. Use `general` topic
+3. Ask "What is [service]"
+4. Ask about best practices
+5. Look for getting started guides
+
+**Example:**
+```bash
+venv/bin/python cli/interactive_aws.py
+💬 You: What is Lambda
+💬 You: Lambda best practices
+💬 You: Lambda getting started
+```
+
+### Finding API Documentation
+
+**Goal:** Find boto3 or AWS CLI documentation
+
+**Approach:**
+1. Use CLI or Interactive mode
+2. Use `reference_documentation` topic
+3. Include SDK/CLI name in query
+4. Be specific about the operation
+
+**Example:**
+```bash
+venv/bin/python cli/ask_aws.py "boto3 S3 upload_file" reference_documentation
+venv/bin/python cli/ask_aws.py "aws lambda invoke CLI" reference_documentation
 ```
 
 ### Troubleshooting Errors
 
+**Goal:** Fix an error or issue
+
+**Approach:**
+1. Use any interface
+2. Use `troubleshooting` topic
+3. Include exact error message
+4. Include service name
+
+**Example:**
 ```bash
-# Common errors
-python ask_aws.py "Lambda timeout error" troubleshooting
-python ask_aws.py "S3 access denied error" troubleshooting
-python ask_aws.py "DynamoDB throttling" troubleshooting
-python ask_aws.py "API Gateway 403 error" troubleshooting
+venv/bin/python cli/ask_aws.py "Lambda timeout error" troubleshooting
+venv/bin/python cli/ask_aws.py "S3 AccessDenied" troubleshooting
 ```
 
-### CDK Development
+### Writing CDK Code
 
+**Goal:** Write infrastructure as code with CDK
+
+**Approach:**
+1. Use Web UI or Interactive mode
+2. Start with `cdk_docs` for concepts
+3. Switch to `cdk_constructs` for examples
+4. Include language (Python, TypeScript, etc.)
+
+**Example:**
 ```bash
-# CDK concepts
-python ask_aws.py "CDK stack construct TypeScript" cdk_docs
-python ask_aws.py "CDK best practices Python" cdk_docs
-
-# CDK code examples
-python ask_aws.py "Lambda function CDK Python example" cdk_constructs
-python ask_aws.py "API Gateway Lambda CDK TypeScript" cdk_constructs
-python ask_aws.py "DynamoDB table CDK" cdk_constructs
+venv/bin/python cli/interactive_aws.py
+💬 You: topic cdk_docs
+💬 You: CDK stack construct
+💬 You: topic cdk_constructs
+💬 You: Lambda function CDK Python
 ```
 
-### CloudFormation Templates
+### Staying Updated
 
+**Goal:** Learn about new AWS features
+
+**Approach:**
+1. Use any interface
+2. Use `current_awareness` topic
+3. Ask about specific service updates
+4. Ask "what's new"
+
+**Example:**
 ```bash
-python ask_aws.py "Lambda function CloudFormation template" cloudformation
-python ask_aws.py "DynamoDB table CloudFormation" cloudformation
-python ask_aws.py "SAM template API Gateway" cloudformation
+venv/bin/python cli/ask_aws.py "Lambda new features 2024" current_awareness
+venv/bin/python cli/ask_aws.py "what's new in S3" current_awareness
 ```
 
-### New Features & Updates
+## 🔧 Installation
+
+### Prerequisites
+
+- **Python 3.10 or higher**
+- **Internet connection**
+- **pip** (Python package manager)
+
+### Step-by-Step Installation
+
+#### 1. Check Python Version
 
 ```bash
-python ask_aws.py "Lambda new features 2024" current_awareness
-python ask_aws.py "S3 latest updates" current_awareness
-python ask_aws.py "what's new in ECS" current_awareness
+python3 --version
+# Should show 3.10 or higher
 ```
 
-### Amplify Framework
+If you need to install Python:
+- **macOS:** `brew install python@3.11`
+- **Ubuntu:** `sudo apt install python3.11`
+- **Windows:** Download from [python.org](https://python.org)
+
+#### 2. Create Virtual Environment
 
 ```bash
-python ask_aws.py "Amplify authentication React" amplify_docs
-python ask_aws.py "Amplify GraphQL API Next.js" amplify_docs
-python ask_aws.py "Amplify Storage Flutter" amplify_docs
+# Navigate to project directory
+cd aws-knowledge-query
+
+# Create virtual environment
+python3 -m venv venv
+
+# Verify it was created
+ls -la venv/
 ```
 
----
+#### 3. Activate Virtual Environment
 
-## 🔧 Troubleshooting
-
-### No Results Found
-
-**Problem:** Query returns no results
-
-**Solutions:**
-1. Try a different topic category
-2. Rephrase your question to be more specific
-3. Use service names explicitly (e.g., "Lambda" instead of "function")
-4. Try the `general` topic for broad questions
-
-### Connection Errors
-
-**Problem:** Cannot connect to MCP server
-
-**Solutions:**
-1. Check your internet connection
-2. Verify the endpoint is accessible: `curl https://knowledge-mcp.global.api.aws`
-3. Check if you're behind a firewall/proxy
-4. Try again later (service may be temporarily unavailable)
-
-### Import Errors
-
-**Problem:** `ModuleNotFoundError: No module named 'mcp'`
-
-**Solution:**
+**macOS/Linux:**
 ```bash
-# Make sure virtual environment is activated
 source venv/bin/activate
-
-# Reinstall dependencies
-pip install mcp httpx
 ```
 
-### Rate Limiting
+**Windows:**
+```bash
+venv\Scripts\activate
+```
 
-**Problem:** Getting rate limited
+You should see `(venv)` in your prompt.
 
-**Solution:**
-- The service is free but rate-limited
-- Wait a few minutes between large batches of queries
-- Use responsibly
+#### 4. Install Dependencies
 
----
+```bash
+pip install mcp httpx flask
+```
 
-## ❓ FAQ
+#### 5. Verify Installation
 
-### Do I need an AWS account?
-**No!** The AWS Knowledge MCP Server is completely public and free. No AWS account or credentials required.
+```bash
+# Check installed packages
+pip list | grep -E "mcp|httpx|flask"
 
-### Is this free to use?
-**Yes!** The service is provided by AWS at no cost. However, it is rate-limited, so use responsibly.
+# Test CLI
+venv/bin/python cli/ask_aws.py --help
 
-### Can I use this in production?
-This is designed for development and learning. For production use cases, consider:
-- Deploying your own MCP server
-- Using AWS's official SDKs and APIs
-- Implementing proper caching and rate limiting
+# Test connection
+venv/bin/python cli/ask_aws.py "test query"
+```
 
-### What data sources does it use?
-The AWS Knowledge MCP Server indexes:
-- AWS official documentation
-- AWS blog posts
-- What's New announcements
-- Getting Started guides
-- Code examples and samples
-- CloudFormation/CDK documentation
+### Troubleshooting Installation
 
-### Can I search multiple topics at once?
-Via CLI: One topic at a time  
-Via code: Yes, pass a list of topics to the `ask()` function
+See [Troubleshooting Guide](TROUBLESHOOTING.md) for detailed solutions.
 
-### How current is the information?
-The AWS Knowledge MCP Server is continuously updated by AWS with the latest documentation and announcements.
+**Common issues:**
+- Python version too old → Install Python 3.10+
+- Module not found → Activate venv and install dependencies
+- Permission denied → Use `sudo` or check file permissions
 
-### Is my query data stored?
-Refer to AWS's privacy policy for the Knowledge MCP Server. Generally, queries may be logged for service improvement.
+## 🌐 Architecture
 
----
-
-## 🌐 Technical Details
-
-### Architecture
+### System Overview
 
 ```
-┌─────────────────────┐
-│   Your Script       │
-│  (ask_aws.py or     │
-│  interactive_aws.py)│
-└──────────┬──────────┘
-           │ HTTPS
-           ▼
-┌─────────────────────────────────────┐
-│  https://knowledge-mcp.global.api.aws│
-│  (AWS Managed MCP Server)           │
-└──────────┬──────────────────────────┘
-           │
-           ▼
-┌─────────────────────┐
-│  AWS Documentation  │
-│  AWS Services Data  │
-│  Regional Info      │
-└─────────────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                    Your Application                      │
+│  ┌──────────┐  ┌──────────────┐  ┌──────────────────┐  │
+│  │  Web UI  │  │     CLI      │  │   Interactive    │  │
+│  │ (Flask)  │  │ (ask_aws.py) │  │ (interactive.py) │  │
+│  └────┬─────┘  └──────┬───────┘  └────────┬─────────┘  │
+│       │               │                    │             │
+│       └───────────────┴────────────────────┘             │
+│                       │                                  │
+└───────────────────────┼──────────────────────────────────┘
+                        │
+                        │ HTTPS
+                        ▼
+        ┌───────────────────────────────────┐
+        │  AWS Knowledge MCP Server         │
+        │  knowledge-mcp.global.api.aws     │
+        │                                   │
+        │  - Search documentation           │
+        │  - List regions                   │
+        │  - Check availability             │
+        └───────────────────────────────────┘
+                        │
+                        ▼
+        ┌───────────────────────────────────┐
+        │  AWS Documentation Database       │
+        │  - All service docs               │
+        │  - API references                 │
+        │  - Best practices                 │
+        │  - Code examples                  │
+        └───────────────────────────────────┘
 ```
 
 ### MCP Tools Available
 
-The AWS Knowledge MCP Server provides 5 tools:
+The AWS Knowledge MCP Server provides these tools:
 
 1. **aws___search_documentation** - Search AWS docs by topic
 2. **aws___read_documentation** - Fetch specific doc pages
@@ -497,48 +399,75 @@ The AWS Knowledge MCP Server provides 5 tools:
 4. **aws___list_regions** - List all AWS regions
 5. **aws___get_regional_availability** - Check service availability
 
-### Dependencies
-
-- **mcp** - Model Context Protocol client library
-- **httpx** - HTTP client for async requests
-- **Python 3.10+** - Required for async/await support
-
----
-
-## 📁 Project Structure
+## 📊 Project Structure
 
 ```
-mcp-project/
-├── ask_aws.py           # CLI tool for quick queries
-├── interactive_aws.py   # Interactive chat interface
-├── README.md            # This file
-├── USAGE.md             # Quick reference guide
-└── venv/                # Python virtual environment
+aws-knowledge-query/
+├── cli/
+│   ├── ask_aws.py              # CLI tool
+│   └── interactive_aws.py      # Interactive mode
+├── web/
+│   ├── web_ui.py               # Flask server
+│   ├── start_web_ui.sh         # Startup script
+│   ├── templates/
+│   │   └── index.html          # HTML template
+│   └── static/
+│       ├── css/
+│       │   └── style.css       # Styles
+│       └── js/
+│           └── app.js          # Frontend logic
+├── docs/
+│   ├── README.md               # This file
+│   ├── CLI_GUIDE.md            # CLI documentation
+│   ├── INTERACTIVE_GUIDE.md    # Interactive mode docs
+│   ├── WEB_UI_GUIDE.md         # Web UI documentation
+│   ├── API_REFERENCE.md        # Python API reference
+│   └── TROUBLESHOOTING.md      # Troubleshooting guide
+├── venv/                        # Virtual environment
+└── README.md                    # Main README
 ```
-
----
 
 ## 🤝 Contributing
 
-This is a demonstration project. Feel free to:
-- Fork and modify for your needs
-- Add new features
-- Improve error handling
-- Add more examples
+Contributions are welcome! Areas for improvement:
 
----
+- Additional examples
+- Better error handling
+- Performance optimizations
+- New features
+- Documentation improvements
+- Bug fixes
 
 ## 📄 License
 
-This project is provided as-is for educational and development purposes. The AWS Knowledge MCP Server is provided by AWS - refer to AWS's terms of service.
+Educational and development use. See AWS's terms for the MCP server.
 
----
-
-## 🔗 Resources
+## 🔗 External Resources
 
 - [AWS MCP Documentation](https://awslabs.github.io/mcp/)
 - [Model Context Protocol](https://modelcontextprotocol.io/)
 - [AWS Knowledge MCP Server](https://awslabs.github.io/mcp/servers/aws-knowledge-mcp-server)
+- [AWS Documentation](https://docs.aws.amazon.com/)
+
+## ❓ FAQ
+
+**Q: Do I need an AWS account?**  
+A: No! The AWS Knowledge MCP Server is completely public and free.
+
+**Q: Is this free to use?**  
+A: Yes, completely free. The service is rate-limited, so use responsibly.
+
+**Q: Can I use this in production?**  
+A: This is designed for development and learning. For production, implement caching and rate limiting.
+
+**Q: How current is the information?**  
+A: The AWS Knowledge MCP Server is continuously updated by AWS.
+
+**Q: Can I contribute?**  
+A: Yes! Contributions are welcome.
+
+**Q: Where can I get help?**  
+A: Check the [Troubleshooting Guide](TROUBLESHOOTING.md) or review the relevant user guide.
 
 ---
 
