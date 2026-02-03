@@ -131,7 +131,7 @@ aws opensearch create-domain \
 ## ❓ FAQ
 
 **Q: Do I need an AWS account?**  
-A: No, for the Knowledge MCP server. Yes, for AWS MCP (Core) and EKS MCP.
+A: No, for the Knowledge MCP server. 
 
 **Q: Is this free?**  
 A: Yes, the Knowledge MCP server is free. Other endpoints may incur AWS charges.
