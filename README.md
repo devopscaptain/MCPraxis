@@ -80,6 +80,7 @@ Then open `http://localhost:8080` in your browser.
 - Mobile-friendly
 
 📖 See [Web UI Guide](docs/WEB_UI_GUIDE.md) for details.
+<img width="1004" height="776" alt="SCR-20260203-kbcj" src="https://github.com/user-attachments/assets/a5501e3d-b0a3-4843-832d-9a13c0ac75a4" />
 
 ### 2. Command Line - Best for Automation
 
