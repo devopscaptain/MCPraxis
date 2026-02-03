@@ -18,6 +18,7 @@ pip install mcp httpx flask
 cd web
 ../venv/bin/python web_ui.py
 # Open http://localhost:8080
+<img width="1333" height="833" alt="SCR-20260203-kbir" src="https://github.com/user-attachments/assets/683f9ffb-b41e-4a49-a445-6890d8b06bae" />
 
 # Command Line
 venv/bin/python cli/ask_aws.py "How to create Lambda function"
